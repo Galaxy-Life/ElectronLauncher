@@ -1,4 +1,4 @@
-# FlashBrowser2
+# Galaxy Life Launcher
 A small browser capable of viewing/displaying pages with embedded flash content.
 
 # How do I use it?

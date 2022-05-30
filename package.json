@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . FlashBrowser2 --platform=all",
+    "build": "electron-packager . GalaxyLifeLauncher --platform=all",
     "pack": "build --dir",
     "dist": "electron-builder"
   },
