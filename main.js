@@ -2,11 +2,10 @@
 const electron = require('electron');
 const path = require('path');
 
-const { app, BrowserWindow, Menu} = electron; //Menu generated for the purposes of visiting new URLs.
-const prompt = require('electron-prompt'); //prompting system to get user URL
+const { app, BrowserWindow, Menu } = electron; //Menu generated for the purposes of visiting new URLs.
 
-
-let pluginName = null; //put the right flash plugin in depending on the operating system.
+// Load correct flash player
+let pluginName = null;
 switch (process.platform) {
     case 'win32':
         switch (process.arch) {
@@ -46,7 +45,14 @@ let mainWindow;
 
 app.on('ready', function () {
 
-    var menu = Menu.buildFromTemplate([]);
+    var menu = Menu.buildFromTemplate([
+        {
+            label: "Fullscreen",
+            click() {
+                win.fullScreen = !win.fullScreen;
+            }
+        }
+    ]);
     Menu.setApplicationMenu(menu);
 
     // create window
@@ -55,17 +61,15 @@ app.on('ready', function () {
         webPreferences: {
             plugins: true
         },
-        title: "Galaxy Life"
+        title: "Galaxy Life",
+        autoHideMenuBar: true,
+        darkTheme: true
     })
 
     // load default page
     win.loadURL("https://game.galaxylifegame.net/game");
     win.maximize();
-
-    //pauses program for 1 second to allow web-page to load before rendering.
-    setTimeout(() => {
-        win.show();
-    }, 1000);
+    win.show();
 
     win.webContents.session.clearCache(function () {
         //clearCache
