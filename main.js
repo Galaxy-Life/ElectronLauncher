@@ -45,22 +45,7 @@ let mainWindow;
 app.on('ready', function () {
 
     InitializeSteamWorks();
-
-    var menu = Menu.buildFromTemplate([
-        {
-            label: "Fullscreen",
-            click() {
-                win.fullScreen = !win.fullScreen;
-            }
-        },
-        {
-            label: "Reload Game",
-            click() {
-                win.loadURL("https://game.galaxylifegame.net/game");
-            }
-        }
-    ]);
-    Menu.setApplicationMenu(menu);
+    InitializeBrowserMenu();
 
     // create window
     let win = new BrowserWindow({
@@ -89,6 +74,41 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 })
+
+function InitializeBrowserMenu() {
+    var menu = Menu.buildFromTemplate([
+        {
+            label: "Actions",
+            submenu: [
+                {
+                    label: "Reload Game",
+                    accelerator: process.platform === "darwin" ? "Cmd+R" : "Ctrl+R",
+                    click() { win.loadURL("https://game.galaxylifegame.net/game"); }
+                },
+                {
+                    label: "Reload",
+                    acceleratorWorksWhenHidden: true,
+                    accelerator: "F5",
+                    click() { win.loadURL("https://game.galaxylifegame.net/game"); },
+                    visible: false
+                }
+            ],
+            
+        },
+        {
+            label: "Options",
+            submenu: [
+                {
+                    label: "Fullscreen",
+                    accelerator: "F11",
+                    click() { win.fullScreen = !win.fullScreen; }
+                }
+            ]
+        },
+    ]);
+
+    Menu.setApplicationMenu(menu);
+}
 
 function InitializeSteamWorks() {
     // work around to make .init() (according to greenworks docs)
