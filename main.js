@@ -58,6 +58,7 @@ app.on('ready', function () {
     // create window
     let win = new BrowserWindow({
         show: false,
+        //icon: "images/logo.ico",
         webPreferences: {
             plugins: true
         },
@@ -69,7 +70,6 @@ app.on('ready', function () {
     // load default page
     win.loadURL("https://game.galaxylifegame.net/game");
     win.maximize();
-    win.show();
 
     win.webContents.session.clearCache(function () {
         //clearCache

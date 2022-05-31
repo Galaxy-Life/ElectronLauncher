@@ -1,10 +1,10 @@
 {
   "name": "galaxy-life-launcher",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A small browser capable of viewing/displaying pages with embedded flash content.",
   "main": "main.js",
   "author": {
-    "name": "tootyta12"
+    "name": "tootyta12, svr333"
   },
   "directories": {
     "flashver": "flashver"
