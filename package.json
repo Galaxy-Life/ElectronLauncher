@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . GalaxyLifeLauncher --platform=all",
+    "build": "electron-packager . GalaxyLifeLauncher --platform=all --icon=./images/logo.ico",
     "pack": "build --dir",
     "dist": "electron-builder"
   },
