@@ -1,8 +1,9 @@
-
+const greenworks = require('greenworks');
 const electron = require('electron');
 const path = require('path');
 
 const { app, BrowserWindow, Menu } = electron;
+let steamAvailable = false;
 
 // Load correct flash player
 let pluginName = null;
@@ -43,6 +44,8 @@ let mainWindow;
 
 app.on('ready', function () {
 
+    InitializeSteamWorks();
+
     var menu = Menu.buildFromTemplate([
         {
             label: "Fullscreen",
@@ -80,3 +83,36 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 })
+
+function InitializeSteamWorks() {
+    // work around to make .init() (according to greenworks docs)
+    process.activateUvLoop();
+
+    if (!greenworks.init()) {
+        console.log("Failed to initialize steamworks");
+        return;
+    }
+
+    steamAvailable = true;
+}
+
+function IsSteamAvailable() {
+    return steamAvailable;
+}
+
+function GetSteamFriends() {
+    if (!steamAvailable) {
+        return;
+    }
+
+    var friends = greenworks.getFriends(greenworks.FriendFlags.Immediate);
+    return friends;
+}
+
+function GetPersonaName() {
+    if (!steamAvailable) {
+        return;
+    }
+
+    return greenworks.getSteamId().getPersonaName();
+}

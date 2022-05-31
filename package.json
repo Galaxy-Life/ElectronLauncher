@@ -18,8 +18,10 @@
   "devDependencies": {
     "electron": "^11.4.9",
     "electron-builder": "^22.11.7",
-    "electron-packager": "^15.2.0"
+    "electron-packager": "^15.2.0",
+    "electron-rebuild": "^3.2.7"
   },
   "dependencies": {
+    "greenworks": "github:greenheartgames/greenworks"
   }
 }
