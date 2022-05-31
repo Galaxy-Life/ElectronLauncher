@@ -94,7 +94,6 @@ function InitializeBrowserMenu(win) {
                     visible: false
                 }
             ],
-            
         },
         {
             label: "Options",
