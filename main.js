@@ -52,6 +52,12 @@ app.on('ready', function () {
             click() {
                 win.fullScreen = !win.fullScreen;
             }
+        },
+        {
+            label: "Reload Game",
+            click() {
+                win.loadURL("https://game.galaxylifegame.net/game");
+            }
         }
     ]);
     Menu.setApplicationMenu(menu);
