@@ -45,7 +45,6 @@ let mainWindow;
 app.on('ready', function () {
 
     InitializeSteamWorks();
-    InitializeBrowserMenu();
 
     // create window
     let win = new BrowserWindow({
@@ -58,6 +57,8 @@ app.on('ready', function () {
         autoHideMenuBar: true,
         darkTheme: true
     })
+
+    InitializeBrowserMenu(win);
 
     // load default page
     win.loadURL("https://game.galaxylifegame.net/game");
@@ -75,7 +76,7 @@ app.on('window-all-closed', () => {
     }
 })
 
-function InitializeBrowserMenu() {
+function InitializeBrowserMenu(win) {
     var menu = Menu.buildFromTemplate([
         {
             label: "Actions",
