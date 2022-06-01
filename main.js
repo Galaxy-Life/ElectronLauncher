@@ -1,9 +1,17 @@
 const greenworks = require('greenworks');
 const electron = require('electron');
+const discord = require('discord-rpc')
 const path = require('path');
 
 const { app, BrowserWindow, Menu } = electron;
 let steamAvailable = false;
+
+// Initialize Discord RPC
+const discordClientId = "772995176041283615";
+discord.register(discordClientId);
+
+const rpc = new discord.Client({ transport: "ipc" });
+const startTimestamp = new Date();
 
 // Load correct flash player
 let pluginName = null;
@@ -44,7 +52,7 @@ let mainWindow;
 
 app.on('ready', function () {
 
-    InitializeSteamWorks();
+    initializeSteamWorks();
 
     // create window
     let win = new BrowserWindow({
@@ -58,7 +66,7 @@ app.on('ready', function () {
         darkTheme: true
     })
 
-    InitializeBrowserMenu(win);
+    initializeBrowserMenu(win);
 
     // load default page
     win.loadURL("https://game.galaxylifegame.net/game");
@@ -67,16 +75,48 @@ app.on('ready', function () {
     win.webContents.session.clearCache(function () {
         //clearCache
     });
+
+    // login to discord for rpc
+    rpc.login({ clientId: discordClientId }).catch(console.error);
 })
+
+// Set activity every 15 seconds
+rpc.on('ready', async () => {
+    setDiscordActivity();
+
+    setInterval(() => {
+        setDiscordActivity();
+    }, 15000);
+});
 
 app.on('window-all-closed', () => {
     // apparently darwins an edge case
     if (process.platform !== 'darwin') {
         app.quit();
     }
-})
+});
 
-function InitializeBrowserMenu(win) {
+async function setDiscordActivity() {
+    // discord failed to setup
+    if (!rpc) {
+        return;
+    }
+
+    rpc.setActivity({
+        details: "Pushing a starling on a swing",
+        startTimestamp: startTimestamp,
+        largeImageKey: "gl-icon",
+        instance: false,
+        buttons: [
+            {
+                label: "Play now!",
+                url: "https://galaxylifegame.net"
+            }
+        ]
+    });
+}
+
+function initializeBrowserMenu(win) {
     var menu = Menu.buildFromTemplate([
         {
             label: "Actions",
@@ -110,7 +150,7 @@ function InitializeBrowserMenu(win) {
     Menu.setApplicationMenu(menu);
 }
 
-function InitializeSteamWorks() {
+function initializeSteamWorks() {
     // work around to make .init() (according to greenworks docs)
     process.activateUvLoop();
 
@@ -122,11 +162,11 @@ function InitializeSteamWorks() {
     steamAvailable = true;
 }
 
-function IsSteamAvailable() {
+function isSteamAvailable() {
     return steamAvailable;
 }
 
-function GetSteamFriends() {
+function getSteamFriends() {
     if (!steamAvailable) {
         return;
     }
@@ -135,7 +175,7 @@ function GetSteamFriends() {
     return friends;
 }
 
-function GetPersonaName() {
+function getPersonaName() {
     if (!steamAvailable) {
         return;
     }
