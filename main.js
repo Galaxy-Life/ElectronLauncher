@@ -57,7 +57,7 @@ app.on('ready', function () {
     // create window
     let win = new BrowserWindow({
         show: false,
-        //icon: "images/logo.ico",
+        icon: "resources/logo.png",
         webPreferences: {
             plugins: true
         },
