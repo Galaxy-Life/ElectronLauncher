@@ -124,13 +124,13 @@ function initializeBrowserMenu(win) {
                 {
                     label: "Reload Game",
                     accelerator: process.platform === "darwin" ? "Cmd+R" : "Ctrl+R",
-                    click() { win.loadURL("https://game.galaxylifegame.net/game"); }
+                    click() { win.loadURL("https://game.galaxylifegame.net/game", { userAgent: "GLLauncherSteam" }); }
                 },
                 {
                     label: "Reload",
                     acceleratorWorksWhenHidden: true,
                     accelerator: "F5",
-                    click() { win.loadURL("https://game.galaxylifegame.net/game"); },
+                    click() { win.loadURL("https://game.galaxylifegame.net/game", { userAgent: "GLLauncherSteam" }); },
                     visible: false
                 }
             ],
