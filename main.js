@@ -69,7 +69,7 @@ app.on('ready', function () {
     initializeBrowserMenu(win);
 
     // load default page
-    win.loadURL("https://game.galaxylifegame.net/game");
+    win.loadURL("https://game.galaxylifegame.net/game", { userAgent: "GLLauncherSteam" });
     win.maximize();
 
     win.webContents.session.clearCache(function () {
