@@ -1,5 +1,2 @@
 node_modules/
-GalaxyLifeLauncher-win32-x64
-GalaxyLifeLauncher-mas-x64
-GalaxyLifeLauncher-linux-x64
-GalaxyLifeLauncher-darwin-x64/
+build/

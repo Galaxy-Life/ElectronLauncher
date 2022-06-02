@@ -151,7 +151,8 @@ function initializeBrowserMenu(win) {
 }
 
 function initializeSteamWorks() {
-    // work around to make .init() (according to greenworks docs)
+    try {
+        // work around to make .init() (according to greenworks docs)
     process.activateUvLoop();
 
     if (!greenworks.init()) {
@@ -160,6 +161,9 @@ function initializeSteamWorks() {
     }
 
     steamAvailable = true;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function isSteamAvailable() {
