@@ -1,7 +1,7 @@
-const greenworks = require('greenworks');
 const electron = require('electron');
 const discord = require('discord-rpc')
 const path = require('path');
+const steam = require('steamworks.js');
 
 const { app, BrowserWindow, Menu } = electron;
 let steamAvailable = false;
@@ -12,6 +12,8 @@ discord.register(discordClientId);
 
 const rpc = new discord.Client({ transport: "ipc" });
 const startTimestamp = new Date();
+
+let steamClient;
 
 // Load correct flash player
 let pluginName = null;
@@ -59,7 +61,9 @@ app.on('ready', function () {
         show: false,
         icon: "resources/logo.png",
         webPreferences: {
-            plugins: true
+            plugins: true,
+            contextIsolation: false,
+            nodeIntegration: true
         },
         title: "Galaxy Life",
         autoHideMenuBar: true,
@@ -153,14 +157,14 @@ function initializeBrowserMenu(win) {
 function initializeSteamWorks() {
     try {
         // work around to make .init() (according to greenworks docs)
-    process.activateUvLoop();
+        process.activateUvLoop();
 
-    if (!greenworks.init()) {
-        console.log("Failed to initialize steamworks");
-        return;
-    }
+        if (!(steamClient = steam.init(1927780))) {
+            console.log("Failed to initialize steamworks");
+            return;
+        }
 
-    steamAvailable = true;
+        steamAvailable = true;
     } catch (error) {
         console.log(error);
     }
@@ -186,3 +190,5 @@ function getPersonaName() {
 
     return greenworks.getSteamId().getPersonaName();
 }
+
+require('steamworks.js').electronEnableSteamOverlay();
